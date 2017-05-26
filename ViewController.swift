@@ -122,15 +122,57 @@ class ViewController: UIViewController {
         
         /* -------------------- Optional -------------------- */
 
-        var n0:Int? = 0
-        n0 = nil
-        n0! = n0! + 1
-        print(n0!)
+        //変数宣言時に"?"か"!"を型の最後につけるとOptional型になる
+        //"?" → (普通の)Optional型 / "!" → 暗黙的アンラップ型
+        //(変数宣言時以外で使われる"?"と"!"についてはOptional型とは無関係)
+        var n1:Int?
+        print(n1) //出力: nil
+        var n2:String! //"!"はOptional型じゃないという勘違いがよくあるらしいので注意
+        print(n2) //出力: nil
+
+        //普通の型にnilは入れられない
+        //var n0:Int = nil →エラー
+
+        //普通の方は値を入れないと使うことができない
+        //var n0: Int
+        //print(n0) →エラー
+
+        //値を入れて初期化するとどうなるか
+        var n3: String? = "Hello YajyuSenpai!"
+        print(n3) //出力: Optional("Hello YajyuSenpai!")
         
-        /* 普通のInt型にnilは入れられない
-        var n1:Int = 0
-        n1 = nil
-        */
+        /* -------------------- Optional型を普通の型に変換(アンラップ)する -------------------- */
+        
+        //普通の型とOptional型同士の演算はできない
+        //n0 + n1(= 10 + Optional(10) ) →エラー
+        
+        //1. Forced Unwrapping...アンラップした対象がnilだとエラーで落ちる可能性がある
+        var n4: Int = 10
+        var n5: Int? = 10
+        n4 = n4 + n5! //"!"をつける ※この時の"!"は変数宣言時の"!"とは別物
+        print(n4)
+        
+        //2. Optional Binding...if分を使う
+        var n6: Int?
+        //print(n6!) →これだと落ちる(fatal error: unexpectedly found nil while unwrapping an Optional value)
+        for _ in 0..<2 { //nilだからelseに行くけど、試しにifにも行ってもらうためのfor_in文
+            //if文を使って、値がnilの時は処理をしないようにすしている
+            if let n6_1 = n6 {
+                print(n6_1)
+            } else {
+                print("nilでした〜")
+                n6 = 5
+            }
+        }
+        
+        //3. Optional Chaining
+        //ちょっとよく分からなかったので飛ばします
+        
+        //【重用】暗黙的アンラップ型は使う時にアンラップしなくてもよい
+        var n7: Int = 5
+        var n8: Int! = 30
+        print(n7+n8)
+        //ただし、"?"でOptional型にした時と同様に、強制アンラップしてnilだった時は落ちるので注意
 
         /* ------------------------------ ここまで ------------------------------ */
         
