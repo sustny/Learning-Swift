@@ -141,14 +141,14 @@ class ViewController: UIViewController {
         var n3: String? = "Hello YajyuSenpai!"
         print(n3) //出力: Optional("Hello YajyuSenpai!")
         
-        /* -------------------- Optional型を普通の型に変換(アンラップ)する -------------------- */
+        /* -------------------- アンラップ -------------------- */
         
-        //普通の型とOptional型同士の演算はできない
+        //普通の型とOptional型同士の演算はできない → "アンラップ"することで解決できる
         //n0 + n1(= 10 + Optional(10) ) →エラー
         
         //1. Forced Unwrapping...アンラップした対象がnilだとエラーで落ちる可能性がある
         var n4: Int = 10
-        var n5: Int? = 10
+        let n5: Int? = 10
         n4 = n4 + n5! //"!"をつける ※この時の"!"は変数宣言時の"!"とは別物
         print(n4)
         
@@ -169,13 +169,39 @@ class ViewController: UIViewController {
         //ちょっとよく分からなかったので飛ばします
         
         //【重用】暗黙的アンラップ型は使う時にアンラップしなくてもよい
-        var n7: Int = 5
-        var n8: Int! = 30
+        let n7: Int = 5
+        let n8: Int! = 30
         print(n7+n8)
         //ただし、"?"でOptional型にした時と同様に、強制アンラップしてnilだった時は落ちるので注意
+        
+        /* -------------------- 関数 -------------------- */
+        
+        //返り値あり
+        func kakezan(x: Int) -> Int {
+            return 2 * x
+        }
+        print(kakezan(x: 4))
+        
+        //返り値なし
+        func otakebi(yj: String) { //返り値がなければ"->"が省略できる(実際はString->Voidで動いている)
+            print(yj)
+        }
+        otakebi(yj: "ンアッー！")
+        
+        //タプルとパターンマッチの組み合わせ(よく分からんかった)
+        func camphorInfo() -> (Int, String) {
+            return (4, "Camphor-")
+        }
+        
+        let (age, name) = camphorInfo()
+        
+        print(name)
+        // Camphor-
+
+        
 
         /* ------------------------------ ここまで ------------------------------ */
-        
+
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
