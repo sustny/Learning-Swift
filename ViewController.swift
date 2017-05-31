@@ -188,16 +188,22 @@ class ViewController: UIViewController {
         }
         otakebi(yj: "ンアッー！")
         
-        //タプルとパターンマッチの組み合わせ(よく分からんかった)
-        func camphorInfo() -> (Int, String) {
-            return (4, "Camphor-")
+        //タプルとパターンマッチの組み合わせ(よく分からん)
+        func tt() -> (Int, String) {
+            return (24, "Gakusei")
         }
+        let (nenrei, mibun) = tt()
+        print(nenrei)
+        print(mibun)
         
-        let (age, name) = camphorInfo()
+        //可変長引数を扱う
+        func sample(names: String...) -> String {
+            let length = names.count
+            return names[Int(arc4random())%length]
+        }
+        print(sample(names: "a", "b", "c"))
         
-        print(name)
-        // Camphor-
-
+        //returnの省略やクロージャを使った省略もできるらしいけど、ひとまず飛ばす
         
 
         /* ------------------------------ ここまで ------------------------------ */
