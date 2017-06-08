@@ -7,6 +7,12 @@
 + 17/06/02 - now
   + http://tea-leaves.jp/swift/
 
-## Ikigomi
+## 意気込み
 
-Ganbari-masu
+頑張ります
+
+### メモ
+
+2017.06.08
+
+JavaScriptにリソースを割くためいったん停止
