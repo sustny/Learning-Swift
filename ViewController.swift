@@ -13,20 +13,41 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         
         /* ------------------------------ ここから ------------------------------ */
-        print("Hello, World!") //printは自動で改行する
+        let urlString = "https://spreadsheets.google.com/feeds/cells/1MkW9mP_qpyC3GI_Y9_j8dD7kusNkycCixXflXo0Tro8/od6/public/values?alt=json"
+        let url = NSURL(string: urlString)
         
-        //改行させない方法(↑は「terminator: "\n"」が省略された状態)
-        print("改行", terminator: "") //"\n"を""(空白)にすれば改行されないってワケ
-        print("させない")
+        // 最終的にデータが保存される2次元配列
+        var titleUrlData = [[String]]()
         
-        let name: String = "たどころ"
-        print(name)
+        // NSURLSession を使って JSON を取得
+        let task = URLSession.shared.dataTask(with: url! as URL, completionHandler:{data, response, error in
+            // JSON を元に整理
+            do {
+                let dict = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
+                let feed = dict["feed"] as! NSDictionary
+                let entries = feed["entry"] as! [NSDictionary]
+                var titleUrls = [String]()
+                
+                for entry in entries {
+                    let contents = entry["content"] as! NSDictionary
+                    titleUrls.append(contents["$t"] as! String)
+                }
+                
+                for i in 0..<50 {
+                    var maketitleUrlData = [String]()
+                    maketitleUrlData.append(titleUrls[i*2])
+                    maketitleUrlData.append(titleUrls[i*2 + 1])
+                    titleUrlData.append(maketitleUrlData)
+                }
+                
+                print(titleUrlData)
+                
+            } catch {
+                print("Error")
+            }
+        })
         
-        var age: Int = 24, job: String = "学生"
-        print("\(age)歳、\(job)です。")
-        age = 42; job = "住所不定無職" //複数行を1行にまとめて書く場合";"を末尾につけるとよい 普段からつけてもよい
-        print("\(age)歳、\(job)です。")
-        
+        task.resume()
         /* ------------------------------ ここまで ------------------------------ */
 
         super.viewDidLoad()
