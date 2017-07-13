@@ -15,4 +15,4 @@
 
 2017.06.08
 
-JavaScriptにリソースを割くためいったん停止
+JavaScript(Google Apps Script)にリソースを割くためいったん停止
