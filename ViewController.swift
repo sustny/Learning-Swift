@@ -11,47 +11,48 @@ import UIKit
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
-        
-        /* ------------------------------ ここから ------------------------------ */
-        let urlString = "https://spreadsheets.google.com/feeds/cells/1MkW9mP_qpyC3GI_Y9_j8dD7kusNkycCixXflXo0Tro8/od6/public/values?alt=json"
-        let url = NSURL(string: urlString)
-        
-        // 最終的にデータが保存される2次元配列
-        var titleUrlData = [[String]]()
-        
-        // NSURLSession を使って JSON を取得
-        let task = URLSession.shared.dataTask(with: url! as URL, completionHandler:{data, response, error in
-            // JSON を元に整理
-            do {
-                let dict = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
-                let feed = dict["feed"] as! NSDictionary
-                let entries = feed["entry"] as! [NSDictionary]
-                var titleUrls = [String]()
-                
-                for entry in entries {
-                    let contents = entry["content"] as! NSDictionary
-                    titleUrls.append(contents["$t"] as! String)
-                }
-                
-                for i in 0..<50 {
-                    var maketitleUrlData = [String]()
-                    maketitleUrlData.append(titleUrls[i*2])
-                    maketitleUrlData.append(titleUrls[i*2 + 1])
-                    titleUrlData.append(maketitleUrlData)
-                }
-                
-                print(titleUrlData)
-                
-            } catch {
-                print("Error")
-            }
-        })
-        
-        task.resume()
-        /* ------------------------------ ここまで ------------------------------ */
-
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        /* ------------------------------ ここから ------------------------------ */
+        // ボタンのサイズを定義.
+        let bWidth: CGFloat = 200
+        let bHeight: CGFloat = 50
+        
+        // 配置する座標を定義(画面の中心).
+        let posX: CGFloat = self.view.bounds.width/2 - bWidth/2
+        let posY: CGFloat = self.view.bounds.height/2 - bHeight/2
+        
+        // Labelを作成.
+        let label: UILabel = UILabel(frame: CGRect(x: posX, y: posY, width: bWidth, height: bHeight))
+        
+        // UILabelの背景をオレンジ色に.
+        label.backgroundColor = UIColor.orange
+        
+        // UILabelの枠を丸くする.
+        label.layer.masksToBounds = true
+        
+        // 丸くするコーナーの半径.
+        label.layer.cornerRadius = 20.0
+        
+        // 文字の色を白に定義.
+        label.textColor = UIColor.white
+        
+        // UILabelに文字を代入.
+        label.text = "Hello Swift!!"
+        
+        // 文字の影をグレーに定義.
+        label.shadowColor = UIColor.gray
+        
+        // Textを中央寄せにする.
+        label.textAlignment = NSTextAlignment.center
+        
+        // Viewの背景を青にする.
+        self.view.backgroundColor = UIColor.cyan
+        
+        // ViewにLabelを追加.
+        self.view.addSubview(label)
+        /* ------------------------------ ここまで ------------------------------ */
     }
 
     override func didReceiveMemoryWarning() {
